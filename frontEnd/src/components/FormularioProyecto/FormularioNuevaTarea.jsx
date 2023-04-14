@@ -7,7 +7,7 @@ import { useTarea } from '../../hooks/useTarea'
 // import { useProyectos } from '../../hooks/useProyectos'
 
 const FormularioNuevaTarea = () => {
-  const { handleSubmiTarea, tarea } = useTarea()
+  const { handleNuevaTarea, tarea } = useTarea()
   // const { proyectoID, setProyectoID } = useProyectos()
   const params = useParams()
   const nombreInputRef = useRef(null)
@@ -23,7 +23,7 @@ const FormularioNuevaTarea = () => {
     fechaEntrega: ''
   }
 
-  console.log(tarea)
+  // console.log(tarea)
   // useEffect(() => {
   // }, [tarea])
 
@@ -34,7 +34,7 @@ const FormularioNuevaTarea = () => {
       try {
         const formValues = { ...values }
         formValues.proyectoID = params.id
-        await handleSubmiTarea(formValues)
+        await handleNuevaTarea(formValues)
         formik.resetForm()
       } catch (error) {
         console.log(error)

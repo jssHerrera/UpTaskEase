@@ -7,7 +7,6 @@ const TarjetaProjecto = lazy(() => import('../../components/TarjetaProyecto/Tarj
 
 const Proyectos = memo(function Proyectos () {
   const { proyectos } = useProyectos()
-  // console.log(proyectos)
   return (
     <div className='relative'>
       <div className='flex flex-col gap-7 h-full relative overflow-hidden'>
