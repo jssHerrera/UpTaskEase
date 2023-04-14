@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+@layer components {
+  .layout-dark {
+    @apply dark:bg-gray-900;
+  }
+  .icon {
+    @apply text-xl text-gray-800 dark:text-gray-400;
+  }
+
+  .input-box {
+    @apply w-full flex items-center rounded-md bg-gray-100 border-2 transition-all;
+  }
+
+  /* ====================== */
+  /* input */
+  /* ====================== */
+  .input-form {
+    @apply appearance-none block w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  focus:outline-none;
+  }
+  .input-dark {
+    @apply dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400/50 dark:text-white;
+  }
+  .input-error {
+    @apply border-red-500 dark:border-red-500;
+  }
+  .input-succes {
+    @apply focus:border-emerald-500 dark:focus:ring-emerald-600 dark:focus:border-emerald-600;
+  }
+  .input-btn {
+    @apply cursor-pointer hover:border-emerald-500 dark:hover:ring-emerald-600 dark:hover:border-emerald-600;
+  }
+
+  /* ====================== */
+  /* texto */
+  /* ====================== */
+  .text-dark {
+    @apply text-gray-900 dark:text-white;
+  }
+  .show-pass {
+    @apply text-zinc-300 hover:text-zinc-500 cursor-pointer transition;
+  }
+
+  /* ====================== */
+  /* Drop dawn */
+  /* ====================== */
+  .drop-btn {
+    @apply bg-emerald-500/20  text-teal-600;
+  }
+  .drop-dark {
+    @apply dark:bg-emerald-400/20 dark:text-emerald-500;
+  }
+  .drop-btn-hover {
+    @apply hover:bg-emerald-500/20  hover:text-teal-600;
+  }
+  .drop-dark-hover {
+    @apply dark:hover:bg-emerald-400/20 dark:hover:text-emerald-500;
+  }
+  .drop-item {
+    @apply inline-flex items-center w-full h-7 px-4  cursor-pointer text-sm transition-colors;
+  }
+}
+
+.borde {
+  transition: background-color 0.3s ease;
+}
+
+/* ======================= */
+/* Galss Morphy */
+/* ======================= */
+.glass {
+  @apply bg-emerald-800  rounded-sm bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-400 dark:border-gray-600;
+}
+/* .editar:hover::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  left: 28px;
+  transform: rotate(45deg);
+  background: #36393f;
+  position: absolute;
+  transition: ease-in-out 0.7s;
+}
+
+.editar:hover::after {
+  content: "Editar proyecto";
+  font-size: 12px;
+  border-radius: 5px;
+  background-color: #36393f;
+  color: white;
+  left: 2rem;
+  padding: 1px 4px;
+  position: absolute;
+  z-index: 5;
+} */
+
+.height-cont {
+  height: calc(100vh - 70px);
+}
