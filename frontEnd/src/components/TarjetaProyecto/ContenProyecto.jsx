@@ -21,7 +21,7 @@ export const ContenProyecto = ({ proyectoID, nombre, fechaEntrega, descripcion }
           {nombre}
         </Link>
         <Suspense fallback={<p>loading...</p>}>
-          <DropList id={proyectoID} isOpen={isOpen} setIsOpen={setIsOpen} />
+          <DropList id={proyectoID} isOpen={isOpen} setIsOpen={setIsOpen} onModalSinTareas={onModalSinTareas} />
         </Suspense>
       </div>
       <div className='overflow-hidden min-h-[68px] max-h-[68px] mb-3'>

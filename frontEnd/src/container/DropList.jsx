@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useProyectos } from '../hooks/useProyectos'
 import { IcSharpKeyboardArrowDown } from './Icon'
 
-const DropList = ({ id, isOpen, setIsOpen }) => {
+const DropList = ({ id, isOpen, setIsOpen, onModalSinTareas }) => {
   const { setEliminar, setEliminarID } = useProyectos()
 
   const toggleDropdown = () => {
@@ -38,7 +38,7 @@ const DropList = ({ id, isOpen, setIsOpen }) => {
           >
             <div className='flex flex-col text-gray-500 dark:text-zinc-400 capitalize'>
               <div className='w-full py-[4px]'>
-                <Link to={`${id}`} className='drop-item drop-btn-hover drop-dark-hover'>
+                <Link to={`${id}`} className='drop-item drop-btn-hover drop-dark-hover' onClick={onModalSinTareas}>
                   Ver
                 </Link>
               </div>
