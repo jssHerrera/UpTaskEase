@@ -6,33 +6,46 @@ import { postNuevaTarea, putEditarTarea } from '../services/utaskTraea.api'
 const TareaContext = createContext()
 
 export const TareaProvider = ({ children }) => {
-  const { proyectoID, setProyectoID } = useProyectos()
+  const { proyectoID, setProyectoID } = useProyectos([])
   const [modalFormTarea, setModalFormTarea] = useState(false)
   const [modalSinTareas, setModalSinTareas] = useState(false)
-  const [modalOpcionTarea, setModalOpcionTarea] = useState(false)
+  const [dropTarea, setDropTarea] = useState(false)
   const [tareaID, setTareaID] = useState({})
-  const [tarea, setTarea] = useState({})
-  const [points, setPoints] = useState({ x: 0, y: 0 })
   const [alerta, setAlerta] = useState({})
-
   // ============================
   // =============================
 
   // formulario modal nueva traea
   const handleModal = () => {
     setModalFormTarea(!modalFormTarea)
-    setTarea({})
+    setDropTarea(false)
+  }
+
+  // drop list tarea opciones
+  const handleCloseDrop = () => {
+    setDropTarea(!dropTarea)
   }
 
   // ==============================
-  // avsiso que no hay tarea
+  // modal no hay tarea
   const onModalSinTareas = useCallback(() => {
     setModalSinTareas(true)
   }, [modalSinTareas])
 
+  // =========================
+  // crea nueva tarea
+  // =========================
+  const submitTarea = (tarea) => {
+    if (tarea.tareaID === '') {
+      handleNuevaTarea(tarea)
+    } else {
+      handleEditarTarea(tarea)
+    }
+  }
+
   // ==============================
   // peticion post para nueva tarea
-  const handleNuevaTarea = useCallback((tarea) => {
+  const handleNuevaTarea = useCallback(tarea => {
     const config = getConfig()
     postNuevaTarea(tarea, config)
       .then(elem => {
@@ -54,14 +67,24 @@ export const TareaProvider = ({ children }) => {
 
   // ==============================
   // peticion editar tarea
-  const handleEditarTarea = useCallback((tareaId) => {
-    setTarea(tareaId)
-    handleModal()
-    // const config = getConfig()
-    // putEditarTarea(tareaId, config)
-    //   .then(elem => console.log(elem))
-    //   .catch(error => console.log(error))
-  }, [tareaID])
+  const handleEditarTarea = (tareaId) => {
+    const config = getConfig()
+    putEditarTarea(tareaId, config)
+      .then(elem => {
+        const tareaActualizado = { ...proyectoID }
+        tareaActualizado.tareas = tareaActualizado.tareas.map(tareaState => tareaState.tareaID === elem[0].tareaID ? elem[0] : tareaState)
+        setProyectoID(tareaActualizado)
+        setAlerta({
+          msg: 'Se actualizo el proyecto correctamente',
+          error: false
+        })
+        setTimeout(() => {
+          setAlerta({})
+          setModalFormTarea(false)
+        }, 2000)
+      })
+      .catch(error => console.log(error.message))
+  }
 
   return (
     <TareaContext.Provider
@@ -69,25 +92,23 @@ export const TareaProvider = ({ children }) => {
         alerta,
         modalSinTareas,
         modalFormTarea,
-        modalOpcionTarea,
-        points,
-        tarea,
+        dropTarea,
+        proyectoID,
         tareaID,
 
         // ------------
 
         setModalSinTareas,
-        setModalOpcionTarea,
-        setPoints,
-        setTarea,
         setTareaID,
 
         // -------------
 
         handleNuevaTarea,
         handleModal,
+        handleCloseDrop,
         handleEditarTarea,
-        onModalSinTareas
+        onModalSinTareas,
+        submitTarea
       }}
     >
       {children}
