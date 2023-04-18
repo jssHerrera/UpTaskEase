@@ -13,7 +13,6 @@ export const agregarTareaModelo = async (req) => {
   }
 
   const [tareaAdd] = await pool.query('INSERT INTO tarea(nombre, descripcion, estado, fechaEntrega, prioridad, proyectoID) VALUES (?, ?, ?, ?, ?, ?)', [nombre, descripcion, estado, fechaEntrega, prioridad, proyectoID])
-  console.log(tareaAdd)
 
   if (tareaAdd.affectedRows !== 1) {
     return new Error('No se pudo crear el proyecto, intente nuevamente')
@@ -43,10 +42,10 @@ export const obtenerTareaModelo = async (req) => {
 
 // -------------------------------------------
 export const actualizarTareaModelo = async (req) => {
-  const { id } = req.params
   const { userID } = req.usuario
+  const { tareaID } = req.body
 
-  const [tarea] = await pool.query('SELECT * FROM tarea WHERE tareaID = ?', [id])
+  const [tarea] = await pool.query('SELECT * FROM tarea WHERE tareaID = ?', [tareaID])
   const proyectoID = tarea[0].proyectoID
 
   const result = await valueProyectoUser(proyectoID, userID)
@@ -55,11 +54,12 @@ export const actualizarTareaModelo = async (req) => {
   }
 
   const [data] = await pool.query('UPDATE tarea SET ? WHERE tareaID = ?', [req.body, tarea[0].tareaID])
+
   if (data.affectedRows === 0) {
-    return new Error(`Error UPDATE for tarea: ${id}`)
+    return new Error(`Error UPDATE for tarea: ${tareaID}`)
   }
 
-  const [tareaActualizada] = await pool.query('SELECT * FROM tarea WHERE tareaID = ?', [id])
+  const [tareaActualizada] = await pool.query('SELECT * FROM tarea WHERE tareaID = ?', [tareaID])
 
   return tareaActualizada
 }
