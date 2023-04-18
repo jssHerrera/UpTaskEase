@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom'
 import { GalaCalendar } from '../../container/Icon'
 import { formateFecha } from '../../helpers/formateFecha'
-import { lazy, Suspense, useState } from 'react'
+import { useState } from 'react'
 import { useTarea } from '../../hooks/useTarea'
-
-const DropList = lazy(() => import('../../container/DropList'))
+import { DropList } from '../../container/DropList'
 
 export const ContenProyecto = ({ proyectoID, nombre, fechaEntrega, descripcion }) => {
   const { onModalSinTareas } = useTarea()
@@ -20,9 +19,7 @@ export const ContenProyecto = ({ proyectoID, nombre, fechaEntrega, descripcion }
         <Link to={`${proyectoID}`} className='truncate tracking-tight font-semibold  hover:underline ' onClick={onModalSinTareas}>
           {nombre}
         </Link>
-        <Suspense fallback={<p>loading...</p>}>
-          <DropList id={proyectoID} isOpen={isOpen} setIsOpen={setIsOpen} onModalSinTareas={onModalSinTareas} />
-        </Suspense>
+        <DropList id={proyectoID} isOpen={isOpen} setIsOpen={setIsOpen} onModalSinTareas={onModalSinTareas} />
       </div>
       <div className='overflow-hidden min-h-[68px] max-h-[68px] mb-3'>
         <p className='line-clamp-3 font-normal text-gray-500 dark:text-gray-400'>
