@@ -11,7 +11,8 @@ export const postNuevaTarea = async (datos = {}, config) => {
 // editar Tarea
 // ==============================
 export const putEditarTarea = async (tareaId = {}, config) => {
-  const { nombre, descripcion, fechaEntrega, prioridad, id } = tareaId
-  const { data } = await clienteAxios.put(`/tareas/${id}}`, { nombre, descripcion, fechaEntrega, prioridad }, config)
+  const { nombre, descripcion, prioridad, fechaEntrega, tareaID } = tareaId
+
+  const { data } = await clienteAxios.put(`/tareas/${tareaID}`, { nombre, descripcion, prioridad, fechaEntrega, tareaID }, config)
   return data
 }
