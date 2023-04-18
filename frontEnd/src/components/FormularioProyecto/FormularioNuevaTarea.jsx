@@ -1,31 +1,34 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import { useFormik } from 'formik'
 import { useParams } from 'react-router-dom'
 import { Input, Select, TextArea } from '../../container/InputsForm'
 import { validate } from '../../helpers/formValidNewTarea'
 import { useTarea } from '../../hooks/useTarea'
-// import { useProyectos } from '../../hooks/useProyectos'
 
 const FormularioNuevaTarea = () => {
-  const { handleNuevaTarea, tarea } = useTarea()
-  // const { proyectoID, setProyectoID } = useProyectos()
+  const { tareaID, submitTarea } = useTarea()
   const params = useParams()
   const nombreInputRef = useRef(null)
   const descripcionInputRef = useRef(null)
   const prioridadInputRef = useRef(null)
   const fechaEntregaInputRef = useRef(null)
+  const date = tareaID.fechaEntrega?.split('T')[0]
 
-  const initialValues = {
-    tareaID: '',
-    nombre: '',
-    descripcion: '',
-    prioridad: '',
-    fechaEntrega: ''
-  }
-
-  // console.log(tarea)
-  // useEffect(() => {
-  // }, [tarea])
+  const initialValues = Object.entries(tareaID).length !== 0
+    ? {
+        tareaID: tareaID.tareaID,
+        nombre: tareaID.nombre,
+        descripcion: tareaID.descripcion,
+        prioridad: tareaID.prioridad,
+        fechaEntrega: date
+      }
+    : {
+        tareaID: '',
+        nombre: '',
+        descripcion: '',
+        prioridad: '',
+        fechaEntrega: ''
+      }
 
   const formik = useFormik({
     initialValues,
@@ -34,8 +37,17 @@ const FormularioNuevaTarea = () => {
       try {
         const formValues = { ...values }
         formValues.proyectoID = params.id
-        await handleNuevaTarea(formValues)
-        formik.resetForm()
+        await submitTarea(values)
+
+        formik.resetForm({
+          values: {
+            tareaID: '',
+            nombre: '',
+            descripcion: '',
+            prioridad: '',
+            fechaEntrega: ''
+          }
+        })
       } catch (error) {
         console.log(error)
       }
