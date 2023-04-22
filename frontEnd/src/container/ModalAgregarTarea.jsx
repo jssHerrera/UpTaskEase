@@ -5,6 +5,7 @@ import { useTarea } from '../hooks/useTarea'
 import Alerta from './Alerta'
 
 const ModalAgregarTarea = () => {
+  const { tareaID } = useTarea()
   const { alerta, handleModal } = useTarea()
   const { msg } = alerta
 
@@ -27,7 +28,7 @@ const ModalAgregarTarea = () => {
       >
         <div className=' flex flex-col gap-3 leading-7 mb-8 transition'>
           <p className='text-[20px] leading-6 font-bold'>
-            !Bienvenido/a! Vamos a crear un nuevo proyecto
+            Editar tu tarea: <span className='dark:text-emerald-500'>{tareaID?.nombre}</span>
           </p>
           {msg && (
             <Suspense fallback={<p>loading....</p>}>

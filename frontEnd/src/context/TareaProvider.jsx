@@ -18,6 +18,7 @@ export const TareaProvider = ({ children }) => {
   // formulario modal nueva traea
   const handleModal = () => {
     setModalFormTarea(!modalFormTarea)
+    setTareaID({})
     setDropTarea(false)
   }
 
@@ -75,7 +76,7 @@ export const TareaProvider = ({ children }) => {
         tareaActualizado.tareas = tareaActualizado.tareas.map(tareaState => tareaState.tareaID === elem[0].tareaID ? elem[0] : tareaState)
         setProyectoID(tareaActualizado)
         setAlerta({
-          msg: 'Se actualizo el proyecto correctamente',
+          msg: 'Se actualizo la tarea correctamente',
           error: false
         })
         setTimeout(() => {

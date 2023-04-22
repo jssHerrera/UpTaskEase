@@ -30,6 +30,8 @@ const FormularioNuevaTarea = () => {
         fechaEntrega: ''
       }
 
+  console.log(initialValues)
+
   const formik = useFormik({
     initialValues,
     validate,
@@ -123,7 +125,7 @@ const FormularioNuevaTarea = () => {
 
       <div className='flex flex-col gap-4'>
         <button type='submit' className='rounded-md w-full py-2 px-4 bg-emerald-500 hover:bg-emerald-500/70 text-white transition-colors'>
-          Crear Proyecto
+          {tareaID.tareaID ? 'Editar tarea' : 'Crear Tarea'}
         </button>
       </div>
     </form>
