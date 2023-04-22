@@ -30,8 +30,6 @@ const FormularioNuevaTarea = () => {
         fechaEntrega: ''
       }
 
-  console.log(initialValues)
-
   const formik = useFormik({
     initialValues,
     validate,
