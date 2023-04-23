@@ -3,14 +3,15 @@ import { coloresDinamicos } from '../../helpers/coloresDinamicos'
 import { formateFecha2 } from '../../helpers/formateFecha'
 import { upperCaseFirs } from '../../helpers/UpperCase'
 import { DropTareas } from '../../container/DropTareas'
-import { useTarea } from '../../hooks/useTarea'
+import { useState } from 'react'
 
 export const ContenTarea = ({ elem }) => {
+  const [dropTarea, setDropTarea] = useState(false)
+
   const { tareaID, nombre, descripcion, prioridad, fechaEntrega } = elem
-  const { handleCloseDrop } = useTarea()
 
   const closeDrop = () => {
-    handleCloseDrop()
+    setDropTarea(false)
   }
 
   const titulo = upperCaseFirs(nombre)
@@ -35,7 +36,11 @@ export const ContenTarea = ({ elem }) => {
         <div className='w-full'>
           <div className='flex justify-between '>
             <p className='font-semibold'>{titulo}</p>
-            <DropTareas elem={elem} />
+            <DropTareas
+              elem={elem}
+              dropTarea={dropTarea}
+              setDropTarea={setDropTarea}
+            />
           </div>
           <div className='pt-2'>
             <p>
