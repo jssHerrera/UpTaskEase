@@ -27,7 +27,8 @@ const FormularioNuevaTarea = () => {
         nombre: '',
         descripcion: '',
         prioridad: '',
-        fechaEntrega: ''
+        fechaEntrega: '',
+        proyectoID: params.id
       }
 
   const formik = useFormik({
@@ -35,8 +36,6 @@ const FormularioNuevaTarea = () => {
     validate,
     onSubmit: async values => {
       try {
-        const formValues = { ...values }
-        formValues.proyectoID = params.id
         await submitTarea(values)
 
         formik.resetForm({
