@@ -4,7 +4,9 @@ import { proyectoWhitTarea } from '../../helpers/proyectosWhitTareas.js'
 
 export const agregarTareaModelo = async (req) => {
   const { nombre, descripcion, estado, fechaEntrega, prioridad, proyectoID } = req.body
+
   const { userID } = req.usuario
+
   const message = 'No tienes permisos para añadir tareas'
 
   const result = await valueProyectoUser(proyectoID, userID, message)
@@ -66,13 +68,12 @@ export const actualizarTareaModelo = async (req) => {
 
 // -------------------------------------------
 export const eliminarTareaModelo = async (req) => {
-  const { id } = req.params
   const { userID } = req.usuario
+  const { id } = req.params
   const menssage = 'tarea no encontrada'
 
   const [tarea] = await pool.query('SELECT * FROM tarea WHERE tareaID = ?', [id])
   const proyectoID = tarea[0].proyectoID
-
   const result = await valueProyectoUser(proyectoID, userID, menssage)
   if (result.length === undefined) {
     return result

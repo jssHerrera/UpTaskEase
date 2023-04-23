@@ -96,7 +96,7 @@ const eliminarTareaController = async (req, res) => {
 }
 
 // -------------------------------------------
-// Actualizar Tarea
+// Cambiar estado
 const cambiarEstadoController = async (req, res) => {
   try {
     const connection = await pool.getConnection()
