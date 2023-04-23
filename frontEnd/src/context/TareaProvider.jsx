@@ -1,7 +1,7 @@
 import { createContext, useCallback, useState } from 'react'
 import { getConfig } from '../helpers/getConfigHeaders'
 import { useProyectos } from '../hooks/useProyectos'
-import { postNuevaTarea, putEditarTarea } from '../services/utaskTraea.api'
+import { deleteTarea, postNuevaTarea, putEditarTarea } from '../services/utaskTraea.api'
 
 const TareaContext = createContext()
 
@@ -14,17 +14,11 @@ export const TareaProvider = ({ children }) => {
   const [alerta, setAlerta] = useState({})
   // ============================
   // =============================
-
   // formulario modal nueva traea
   const handleModal = () => {
     setModalFormTarea(!modalFormTarea)
     setTareaID({})
     setDropTarea(false)
-  }
-
-  // drop list tarea opciones
-  const handleCloseDrop = () => {
-    setDropTarea(!dropTarea)
   }
 
   // ==============================
@@ -87,6 +81,24 @@ export const TareaProvider = ({ children }) => {
       .catch(error => console.log(error.message))
   }
 
+  // ==============================
+  // peticion eliminar tarea
+  // ======================
+  const eliminarProyecto = tareaId => {
+    const config = getConfig()
+    deleteTarea(tareaId, config)
+      .then(elem => {
+        const tareaActualizado = { ...proyectoID }
+        tareaActualizado.tareas = tareaActualizado.tareas.filter(tareaState => tareaState.tareaID !== tareaId)
+        setProyectoID(tareaActualizado)
+        setAlerta({
+          msg: elem,
+          error: false
+        })
+      })
+      .catch(error => console.log(error.message))
+  }
+
   return (
     <TareaContext.Provider
       value={{
@@ -101,13 +113,14 @@ export const TareaProvider = ({ children }) => {
 
         setModalSinTareas,
         setTareaID,
+        setDropTarea,
 
         // -------------
 
         handleNuevaTarea,
         handleModal,
-        handleCloseDrop,
         handleEditarTarea,
+        eliminarProyecto,
         onModalSinTareas,
         submitTarea
       }}
