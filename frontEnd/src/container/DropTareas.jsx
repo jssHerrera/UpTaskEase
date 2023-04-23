@@ -1,15 +1,22 @@
 import { IcSharpKeyboardArrowDown, MaterialSymbolsDeleteOutline, MdiCheckboxBlankOutline, PhNotePencilDuotone } from './Icon'
 import { useTarea } from '../hooks/useTarea'
 
-export const DropTareas = ({ elem }) => {
-  const { handleModal, setTareaID, dropTarea, handleCloseDrop } = useTarea()
+export const DropTareas = ({ elem, dropTarea, setDropTarea }) => {
+  const { handleModal, setTareaID, eliminarProyecto } = useTarea()
 
   const toggleDropdown = () => {
-    handleCloseDrop()
+    setDropTarea(!dropTarea)
   }
+
   const onHandleElementsTareas = () => {
     handleModal()
+    setDropTarea(false)
     setTareaID(elem)
+  }
+
+  const onHandleEliminarTarea = () => {
+    eliminarProyecto(elem.tareaID)
+    setDropTarea(false)
   }
 
   return (
@@ -42,8 +49,13 @@ export const DropTareas = ({ elem }) => {
                 </p>
               </div>
               <div className='w-full border-t-2 dark:border-gray-600 py-[4px] group'>
-                <p className='drop-item drop-btn-hover drop-dark-hover group-hover:text-red-500'>
-                  <MaterialSymbolsDeleteOutline className='mr-1 group-hover:text-red-500' />
+                <p
+                  className='drop-item drop-btn-hover drop-dark-hover group-hover:text-red-500'
+                  onClick={onHandleEliminarTarea}
+                >
+                  <MaterialSymbolsDeleteOutline
+                    className='mr-1 group-hover:text-red-500'
+                  />
                   Eliminar
                 </p>
               </div>
